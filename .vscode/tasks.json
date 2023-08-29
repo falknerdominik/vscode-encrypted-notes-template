@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    // Info: Any credentials are loaded from the .env file in the root of your repository. Ensure it exists and atleast contains:
+    // RESSOURCE (URL), USER (S3=ACCESS_KEY), PASSWORD (S3=SECRET_KEY) VAULT_PW (for your cryptomator vault)
+    "tasks": [
+        {
+            "label": "Syncronize Notes",
+            "command": "export $(grep -v '^#' .env | xargs) && echo -e \"$VAULT_PW\n\" | duck --synchronize $RESSOURCE . -e mirror --username $USER --password $PASSWORD --nokeychain",
+            "type": "shell",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Download & Overwrite Notes",
+            "command": "export $(grep -v '^#' .env | xargs) && echo -e \"$VAULT_PW\n\" | duck --synchronize 's3://buckets.tetra-agama.ts.net/notes' . -e download --username $USER --password $PASSWORD --nokeychain",
+            "type": "shell",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Upload Notes",
+            "command": "export $(grep -v '^#' .env | xargs) && echo -e \"$VAULT_PW\n\" | duck --synchronize 's3://buckets.tetra-agama.ts.net/notes' . -e upload --username $USER --password $PASSWORD --nokeychain",
+            "type": "shell",
+            "problemMatcher": [],
+        },
+    ]
+}
